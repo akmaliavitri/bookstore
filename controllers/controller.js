@@ -33,6 +33,18 @@ class Controller {
         })
     }
 
+    static bookDetailCustomerForm(req, res){
+        const id = Number(req.params.id)
+
+        Book.findByPk(id)
+        .then(data => {
+            res.render('detailBookCustomer.ejs', {data})
+        }) 
+        .catch(err => {
+            res.send('err')
+        })
+    }
+
     // ADMIN
 
     static findBooksAdmin(req, res){
