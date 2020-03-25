@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/bootstrap') %>
+    <title>Edit Form</title>
+</head>
+<body>
+    <section style="max-width: 70%; margin: 0 auto;">
+        <%- include('partials/navbar') %>
+        <form action="/book/edit/<%= data.id %>" method="POST">
+            <label>Title :</label><br>
+            <input type="text" name="title" value="<%= data.title %> "><br>
+            <label>Author:</label><br>
+            <input type="text" name="author" value="<%= data.author %> "><br>
+            <label>Price :</label><br>
+            <input type="text" name="price" value="<%= data.price %> "><br>
+            <label>Category:</label>
+                <label for="fiksi">Fiksi</label>
+                <input type="radio" name="categori" id="fiksi" value="fiksi">
+                <label for="nonfiksi">Non fiksi</label>
+                <input type="radio" name="categori" id="nonfiksi" value="nonfiksi"> <br> <br>
+            <br><button type="submit">update</button>
+            <br><a href="/bookAdmin">cancel</a>
+          </form>
+    </section>
+</body>
+</html>

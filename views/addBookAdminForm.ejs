@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include('partials/bootstrap') %>
+        <title>Add Book</title>
+    </head>
+    <body>
+        <%- include('partials/navbar') %> 
+        <form action="" method="POST">
+            <label>title:</label><br>
+            <input type="text" name="title"><br>
+            <label>Author:</label><br>
+            <input type="text" name="author"><br>
+            <label>price:</label><br>
+            <input type="text" name="price"><br>
+            <label>category:</label>
+            <select name="categori">
+                <option value="fiksi">Fiksi</option>
+                <option value="nonfiksi">Non fiksi</option>
+            </select> <br> <br>
+            
+            <button type="submit">Add</button>
+        </form>
+    </body>
+</html>

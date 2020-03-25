@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <%- include('partials/bootstrap') %>
+        <title>Movies</title>
+    </head>
+    <body>
+        <%- include('partials/navbar') %> 
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Price</th>
+                <th>Categori</th>
+                <th>Actions</th>
+            </tr>
+            <% for(let i=0; i<data.length; i++){ %>
+                <tr>
+                    <td><%= data[i].title %></td>
+                    <td><%= data[i].author%></td>
+                    <td><%= data[i].price%></td>
+                    <td><%= data[i].categori %></td>
+                    <td><a href="movies/edit/<%=data[i].id%>">Detail</a> 
+                        <a href="movies/delete/<%=data[i].id%>">Buy</a>
+                    </td>
+                </tr>
+            <% } %>
+        </table>
+    </body>
+</html>
