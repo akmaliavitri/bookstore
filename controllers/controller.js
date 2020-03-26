@@ -92,6 +92,62 @@ class Controller {
         })
     }
 
+    static buyForm(req, res) {
+        const id = Number(req.params.id)
+
+        Book.findByPk(id)
+        .then(book => {
+            if(book) {
+                res.render('buy', {book, username: req.session.username})
+            } else {
+                res.send('Book not found')
+            }
+        })
+        .catch(err => {
+            res.send(err)
+        })
+    }
+
+    static buy(req, res) {
+        const id = Number(req.params.id)
+        let foundBook = null
+        Book.findByPk(id)
+        .then(book => {
+            if(book) {
+                foundBook = book
+                return Transaction.create({
+                    CustomerId: req.session.userId,
+                    BookId: id,
+                    amount: Number(req.body.amount)
+                })
+            }
+        }).then(transaction => {
+            if(foundBook) {
+                req.session.lastTransactionId = transaction.id
+                res.redirect('/buysuccess')
+            } else {
+                res.send('Book not found')
+            }
+        })
+        .catch(err => {
+            res.send(err)
+        })
+    }
+
+    static buySuccess(req, res) {
+        const transactionId = req.session.lastTransactionId
+        Transaction.findOne({where: {id: transactionId}, include: [Book, Customer] }).then(transaction => {
+            console.log(transaction);
+            if(transaction) {
+                res.render('buysuccess', {transaction, username: req.session.username});
+            } else {
+                res.redirect('/')
+            }
+        }).catch(err => {
+            res.send(err);
+        })
+    }
+
     // ADMIN
 
     static findBooksAdmin(req, res){
