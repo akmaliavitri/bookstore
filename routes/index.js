@@ -41,6 +41,7 @@ router.post('/book/add', requireAdminLogin, Controller.addBookAdmin)
 router.get('/book/edit/:id', requireAdminLogin, Controller.editBookAdminForm)
 router.post('/book/edit/:id', requireAdminLogin, Controller.editBookAdmin)
 router.get('/book/delete/:id', requireAdminLogin, Controller.deleteBookAdmin)
+router.get('/transactions', requireAdminLogin, Controller.transactions)
 
 
 module.exports = router

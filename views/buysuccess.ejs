@@ -18,6 +18,12 @@
         <div class="container">
             <div class="mb-4">
                 <h1>Pembelian Berhasil!</h1>
+                <p class="text-center">
+                    ID Transaksi:<br>
+                    <b style="font-size: 1.3em"><%= transaction.id %></b><br>
+                    Tanggal Transaksi:<br>
+                    <b style="font-size: 1.3em"><%= dateToIndonesian(transaction.date) %></b><br>
+                </p>
                 <table class="table table-bordered">
                     <thead>
                         <tr>

@@ -10,6 +10,7 @@ const sessionConfig = {
 const router = require('./routes')
 
 app.locals.toIndonesianRupiah = require('./helpers/toIndonesianRupiah');
+app.locals.dateToIndonesian = require('./helpers/dateToIndonesian');
 
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({extended:true}))

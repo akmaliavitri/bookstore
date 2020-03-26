@@ -214,6 +214,16 @@ class Controller {
         })
     }
 
+    static transactions(req, res){
+        Transaction.findAll({order: [['date', 'asc']], include: [Book, Customer]})
+        .then(data => {
+            res.render('transactionList.ejs', {data, username: req.session.adminUsername})
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
     static showLoginAdmin(req, res) {
         res.render('loginAdmin')
     }
