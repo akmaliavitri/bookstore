@@ -41,7 +41,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {sequelize});
 
   Book.associate = function(models) {
-    // associations can be defined here
+    Book.belongsToMany(models.Customer, {through: models.Transaction});
+    Book.hasMany(models.Transaction);
   };
   return Book;
 };

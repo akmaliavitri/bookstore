@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     BookId: DataTypes.INTEGER
   }, {sequelize});
   Transaction.associate = function(models) {
-    // associations can be defined here
+    Transaction.belongsTo(models.Customer);
+    Transaction.belongsTo(models.Book);
   };
   return Transaction;
 };
