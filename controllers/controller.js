@@ -137,14 +137,14 @@ class Controller {
     static buySuccess(req, res) {
         const transactionId = req.session.lastTransactionId
         Transaction.findOne({where: {id: transactionId}, include: [Book, Customer] }).then(transaction => {
-            console.log(transaction);
+            console.log(transaction)
             if(transaction) {
-                res.render('buysuccess', {transaction, username: req.session.username});
+                res.render('buysuccess', {transaction, username: req.session.username})
             } else {
                 res.redirect('/')
             }
         }).catch(err => {
-            res.send(err);
+            res.send(err)
         })
     }
 
