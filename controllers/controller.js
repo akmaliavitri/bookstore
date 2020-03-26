@@ -1,11 +1,12 @@
 const {Admin, Book, Customer, Transaction} = require('../models')
-const {checkPassword} = require('../helpers/checkPassword');
+const {checkPassword} = require('../helpers/checkPassword')
+const {hashPassword} = require('../helpers/hashPassword')
 
 class Controller {
     static home(req, res){
         Book.findAll().then(books => {
-            res.render('home.ejs', {books});
-        });
+            res.render('home.ejs', {books, username: req.session.username})
+        })
     }
 
     static findBooksCustomer(req, res){
@@ -18,21 +19,64 @@ class Controller {
         })
     }
 
+    static loginForm(req, res) {
+        res.render('loginUser.ejs')
+    }
+
+    static login(req, res) {
+        let fields = req.body
+        let foundData = null
+        Customer.findOne({
+            where: {
+                username: fields.username
+            }
+        })
+        .then(data => {
+            if(data) {
+                foundData = data
+                return checkPassword(fields.password, data.password)
+            }
+        })
+        .then(success => {
+            if(success) {
+                req.session.userId = foundData.id
+                req.session.username = foundData.username
+                res.redirect('/')
+            } else {
+                res.send('Invalid Username/Password')
+            }
+        })
+        .catch(err => {
+            res.send(err)
+        })
+    }
+
     static registrasiForm(req, res){
         res.render('registrasi.ejs')
     }
 
     static registrasi(req, res){
-
-        req.body.createdAt = new Date()
-        req.body.updateAt = new Date()
-
-        Customer.create(req.body)
+        hashPassword(req.body.password).then(hash => {
+            req.body.password = hash
+            return Customer.create(req.body)
+        })
         .then(data => {
-            res.redirect('/book')
+            req.session.userId = data.id
+            req.session.username = data.username
+            res.redirect('/')
         })
         .catch(err => {
             res.send(err)
+        })
+    }
+
+    static logout(req, res) {
+        req.session.destroy((err) => {
+            if(err) {
+                res.send(err)
+            } else {
+                res.redirect('/')
+            }
         })
     }
 
