@@ -3,6 +3,22 @@ const router = Router()
 
 const Controller = require('../controllers/controller.js')
 
+function requireAdminLogin(req, res, next) {
+    if(!req.session.adminId) {
+        res.redirect('/admin/login');
+    } else {
+        next();
+    }
+}
+
+function requireUserLogin(req, res, next) {
+    if(!req.session.userId) {
+        res.redirect('/login');
+    } else {
+        next();
+    }
+}
+
 router.get('/', Controller.home)
 router.get('/registrasi', Controller.registrasiForm)
 router.post('/registrasi', Controller.registrasi)
@@ -16,19 +32,12 @@ router.get('/admin/login', Controller.showLoginAdmin)
 router.post('/admin/login', Controller.loginAdmin)
 router.get('/admin/logout', Controller.logoutAdmin)
 
-router.use((req, res, next) => {
-    if(!req.session.adminId) {
-        res.redirect('/admin/login');
-    } else {
-        next();
-    }
-});
-router.get('/bookAdmin', Controller.findBooksAdmin)
-router.get('/book/add', Controller.addBookAdminForm)
-router.post('/book/add', Controller.addBookAdmin)
-router.get('/book/edit/:id', Controller.editBookAdminForm)
-router.post('/book/edit/:id', Controller.editBookAdmin)
-router.get('/book/delete/:id', Controller.deleteBookAdmin)
+router.get('/bookAdmin', requireAdminLogin, Controller.findBooksAdmin)
+router.get('/book/add', requireAdminLogin, Controller.addBookAdminForm)
+router.post('/book/add', requireAdminLogin, Controller.addBookAdmin)
+router.get('/book/edit/:id', requireAdminLogin, Controller.editBookAdminForm)
+router.post('/book/edit/:id', requireAdminLogin, Controller.editBookAdmin)
+router.get('/book/delete/:id', requireAdminLogin, Controller.deleteBookAdmin)
 
 
 module.exports = router
