@@ -16,6 +16,8 @@ app.set('view engine', 'ejs')
 app.use(express.urlencoded({extended:true}))
 app.use(session(sessionConfig))
 
+app.use('/assets', express.static('assets'));
+app.use('/uploads', express.static('uploads'));
 app.use(router)
 
 app.listen(port, () => {

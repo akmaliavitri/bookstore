@@ -36,9 +36,18 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    
-    categori: DataTypes.STRING
-  }, {sequelize});
+    categori: DataTypes.STRING,
+    image: DataTypes.STRING
+  }, {
+    sequelize,
+    hooks : {
+      beforeCreate: (book, options) => {
+        if(!book.image) {
+          book.image = '/assets/no_picture.jpg'
+        }
+      }
+    }
+  });
 
   Book.associate = function(models) {
     Book.belongsToMany(models.Customer, {through: models.Transaction});

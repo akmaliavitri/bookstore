@@ -168,7 +168,11 @@ class Controller {
         req.body.createdAt = new Date()
         req.body.updateAt = new Date()
 
-        Book.create(req.body)
+        const insertData = req.body
+        if(req.file) {
+            insertData.image = '/' + req.file.destination + req.file.filename
+        }
+        Book.create(insertData)
         .then(data => {
             res.redirect('/bookAdmin')
         })
@@ -192,8 +196,11 @@ class Controller {
 
     static editBookAdmin(req, res){
         const id = req.params.id
-
-        Book.update(req.body, {where : {id}})
+        const insertData = req.body
+        if(req.file) {
+            insertData.image = '/' + req.file.destination + req.file.filename
+        }
+        Book.update(insertData, {where : {id}})
         .then(() => {
             res.redirect('/bookAdmin')
         })

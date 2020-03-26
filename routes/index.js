@@ -1,5 +1,18 @@
 const {Router} = require('express')
+const multer = require('multer');
 const router = Router()
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/')
+    },
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      cb(null, uniqueSuffix + file.originalname)
+    }
+})
+const upload = multer({
+    storage: storage
+})
 
 const Controller = require('../controllers/controller.js')
 
@@ -37,9 +50,9 @@ router.get('/admin/logout', Controller.logoutAdmin)
 
 router.get('/bookAdmin', requireAdminLogin, Controller.findBooksAdmin)
 router.get('/book/add', requireAdminLogin, Controller.addBookAdminForm)
-router.post('/book/add', requireAdminLogin, Controller.addBookAdmin)
+router.post('/book/add', requireAdminLogin, upload.single('image'), Controller.addBookAdmin)
 router.get('/book/edit/:id', requireAdminLogin, Controller.editBookAdminForm)
-router.post('/book/edit/:id', requireAdminLogin, Controller.editBookAdmin)
+router.post('/book/edit/:id', requireAdminLogin, upload.single('image'), Controller.editBookAdmin)
 router.get('/book/delete/:id', requireAdminLogin, Controller.deleteBookAdmin)
 router.get('/transactions', requireAdminLogin, Controller.transactions)
 
