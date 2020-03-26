@@ -5,16 +5,19 @@
     </head>
     <body>
         <%- include('partials/navbar') %> 
-        <table>
+        <table class="table table-sm">
             <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Price</th>
-                <th>Categori</th>
-                <th>Actions</th>
+                <th class="table-info">No</th>
+                <th class="table-info">Title</th>
+                <th class="table-info">Author</th>
+                <th class="table-info">Price</th>
+                <th class="table-info">Categori</th>
+                <th class="table-info">Actions</th>
             </tr>
+            <% no=1 %>
             <% for(let i=0; i<data.length; i++){ %>
                 <tr>
+                    <td><%= no++ %></td>
                     <td><%= data[i].title %></td>
                     <td><%= data[i].author%></td>
                     <td><%= data[i].price%></td>
