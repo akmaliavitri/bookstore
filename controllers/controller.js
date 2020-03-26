@@ -172,13 +172,13 @@ class Controller {
         })
         .then(data => {
             if(data) {
-                foundData = data;
+                foundData = data
                 return checkPassword(fields.password, data.password)
             }
         })
         .then(success => {
             if(success) {
-                req.session.adminId = foundData.id;
+                req.session.adminId = foundData.id
                 res.redirect('/bookAdmin')
             } else {
                 res.send('Invalid Username/Password')
@@ -192,9 +192,9 @@ class Controller {
     static logoutAdmin(req, res) {
         req.session.destroy((err) => {
             if(err) {
-                res.send(err);
+                res.send(err)
             } else {
-                res.redirect('/admin/login');
+                res.redirect('/admin/login')
             }
         })
     }
