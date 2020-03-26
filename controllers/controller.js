@@ -97,7 +97,7 @@ class Controller {
     static findBooksAdmin(req, res){
         Book.findAll({})
         .then(data => {
-            res.render('bookAdminList.ejs', {data})
+            res.render('bookAdminList.ejs', {data, username: req.session.adminUsername})
         })
         .catch(err => {
             console.log(err)
@@ -105,7 +105,7 @@ class Controller {
     }
 
     static addBookAdminForm(req, res){
-        res.render('addBookAdminForm.ejs')
+        res.render('addBookAdminForm.ejs', {username: req.session.adminUsername})
     }
 
     static addBookAdmin(req, res){
@@ -127,7 +127,7 @@ class Controller {
 
         Book.findByPk(id)
         .then(data => {
-            res.render('editBookAdmin.ejs', {data})
+            res.render('editBookAdmin.ejs', {data, username: req.session.adminUsername})
         })
         .catch(err => {
             res.send('err')
@@ -179,6 +179,7 @@ class Controller {
         .then(success => {
             if(success) {
                 req.session.adminId = foundData.id
+                req.session.adminUsername = foundData.username
                 res.redirect('/bookAdmin')
             } else {
                 res.send('Invalid Username/Password')
