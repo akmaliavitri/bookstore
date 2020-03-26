@@ -9,6 +9,17 @@ router.post('/registrasi', Controller.registrasi)
 router.get('/book', Controller.findBooksCustomer)
 router.get('/book/detail/:id', Controller.bookDetailCustomerForm)
 
+router.get('/admin/login', Controller.showLoginAdmin)
+router.post('/admin/login', Controller.loginAdmin)
+router.get('/admin/logout', Controller.logoutAdmin)
+
+router.use((req, res, next) => {
+    if(!req.session.adminId) {
+        res.redirect('/admin/login');
+    } else {
+        next();
+    }
+});
 router.get('/bookAdmin', Controller.findBooksAdmin)
 router.get('/book/add', Controller.addBookAdminForm)
 router.post('/book/add', Controller.addBookAdmin)

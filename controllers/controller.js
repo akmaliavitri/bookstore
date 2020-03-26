@@ -1,4 +1,5 @@
 const {Admin, Book, Customer, Transaction} = require('../models')
+const {checkPassword} = require('../helpers/checkPassword');
 
 class Controller {
     static home(req, res){
@@ -108,6 +109,47 @@ class Controller {
         })
         .catch(err => {
             res.send(err)
+        })
+    }
+
+    static showLoginAdmin(req, res) {
+        res.render('loginAdmin')
+    }
+
+    static loginAdmin(req, res) {
+        let fields = req.body
+        let foundData = null
+        Admin.findOne({
+            where: {
+                username: fields.username
+            }
+        })
+        .then(data => {
+            if(data) {
+                foundData = data;
+                return checkPassword(fields.password, data.password)
+            }
+        })
+        .then(success => {
+            if(success) {
+                req.session.adminId = foundData.id;
+                res.redirect('/bookAdmin')
+            } else {
+                res.send('Invalid Username/Password')
+            }
+        })
+        .catch(err => {
+            res.send(err)
+        })
+    }
+
+    static logoutAdmin(req, res) {
+        req.session.destroy((err) => {
+            if(err) {
+                res.send(err);
+            } else {
+                res.redirect('/admin/login');
+            }
         })
     }
 }
