@@ -11,7 +11,7 @@ module.exports = {
       date: {
         type: Sequelize.DATE
       },
-      amouunt: {
+      amount: {
         type: Sequelize.INTEGER
       },
       CustomerId: {

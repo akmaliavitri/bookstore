@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Transaction.init({
     date: DataTypes.DATE,
-    amouunt: DataTypes.INTEGER,
+    amount: DataTypes.INTEGER,
     CustomerId: DataTypes.INTEGER,
     BookId: DataTypes.INTEGER
   }, {sequelize});
