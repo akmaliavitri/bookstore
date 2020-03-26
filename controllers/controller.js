@@ -3,7 +3,9 @@ const {checkPassword} = require('../helpers/checkPassword');
 
 class Controller {
     static home(req, res){
-        res.render('home.ejs')
+        Book.findAll().then(books => {
+            res.render('home.ejs', {books});
+        });
     }
 
     static findBooksCustomer(req, res){
