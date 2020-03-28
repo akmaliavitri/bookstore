@@ -9,9 +9,34 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   Book.init({
-    title: DataTypes.STRING,
-    author: DataTypes.STRING,
-    price: DataTypes.INTEGER,
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Title is empty'
+        }
+      }
+    },
+    author: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Author is empty'
+        }
+      }
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Price is empty'
+        }
+      }
+    },
+    
     categori: DataTypes.STRING
   }, {sequelize});
 
